@@ -1,0 +1,13 @@
+{% extends 'vacancies/company/my_company_base.html' %}
+
+{% block my_company %}
+<h2 class="h4 pt-2 pb-3">Вакансии</h2>
+
+{% for vacancy in object_list %}
+{% include "vacancies/helpers/vacancy_company_card.html" with vacancy=vacancy %}
+{% endfor %}
+<div class="form-group">
+    <a href="{% url 'company:my_company_vacancy_create' %}" class="btn btn-info mt-3">Создать вакансию</a>
+</div>
+
+{% endblock %}

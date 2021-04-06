@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+
+<form method="post" action="{% url 'accounts:login'%}">
+    {% csrf_token %}
+    <table>{{ form.as_table }}</table>
+    <button type="submit">Login</button>
+    <input type="hidden" name="next" value="{{ request.GET.next }}" />
+</form>
+<div class="mt-4 text-center">
+    <p>Нет аккаунта?<a href="{% url 'accounts:signup' %}">Зарегистрируйтесь!</a></p>
+</div>
+{% endblock %}

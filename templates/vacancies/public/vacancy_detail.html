@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+<div class="row mt-5">
+    <div class="col-12 col-lg-2">
+        <div class="pl-3 mb-5">
+            <p><a href="{{ request.META.HTTP_REFERER }}">Назад</a></p>
+        </div>
+    </div>
+    <div class="col-12 col-lg-8">
+        <section class="pl-3">
+            <a href="{% url 'public:company' object.company.id %}">
+                <img src="{% static object.company.logo %}" class="mx-auto d-block mw-100" alt="">
+            </a>
+            <div class="d-flex align-items-baseline align-content-baseline">
+                <h1 class="h2 mt-4 font-weight-bold">{{ object.title }}</h1>
+                <p class="m-0 pl-3">{{ object.salary_min }} – {{ object.salary_max }} Р</p>
+            </div>
+            <p class="mt-2">{{ object.skills }}</p>
+            <p class="text-muted mb-4">{{ object.company.name }} ({{ object.company.employee_count }} человек),
+                {{object.company.location }} или удаленно</p>
+            <div style="line-height: 1.8;">
+                <p>{{object.description|safe }}</p>
+            </div>
+
+            {% if user.is_authenticated %}
+            <form method="post" action="{{ request.path }}">
+                {% csrf_token %}
+                <table>{{ form.as_table }}</table>
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-info" value="Отправить завку">
+                </div>
+            </form>
+            {% else %}
+            <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="nav-link font-weight-bold">
+                Авторизуйтесь для отклика
+            </a>
+            {% endif %}
+        </section>
+    </div>
+</div>
+{% endblock %}

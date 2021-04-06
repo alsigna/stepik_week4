@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<section>
+    <h1 class="h1 text-center mx-auto mt-4 py-5"><strong>Вакансии для <br>Junior-разработчиков</strong></h1>
+    {% include "vacancies/helpers/search_panel.html" %}
+</section>
+
+<section class="mt-5 pt-3">
+    <h2 class="h2 font-weight-normal text-center mb-5">Вакансии по рубрикам</h2>
+    <div class="row mb-0">
+        {% for specialty in specialties %}
+        {% include "vacancies/helpers/specialty_card.html" with specialty=specialty %}
+        {% endfor %}
+    </div>
+</section>
+
+<section class="my-5 pt-3">
+    <h2 class="h2 font-weight-normal text-center mb-5">Нам доверяют лучшие компании</h2>
+    <div class="row mb-0">
+        {% for company in companies %}
+        {% include "vacancies/helpers/company_card.html" with company=company %}
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
