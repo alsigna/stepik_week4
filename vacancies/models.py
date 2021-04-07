@@ -12,7 +12,7 @@ class Company(models.Model):
     location = models.CharField(max_length=128)
     description = models.TextField()
     employee_count = models.IntegerField()
-    owner = models.OneToOneField(User, on_delete=models.CASCADE, related_name="company")
+    owner = models.OneToOneField(User, on_delete=models.CASCADE, related_name="company", null=True)
     logo = models.ImageField(upload_to=MEDIA_COMPANY_IMAGE_DIR)
 
     def delete(self, *args, **kwargs):

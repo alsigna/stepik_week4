@@ -24,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "qr!wkhy+5p7t+pp54v)+^-e1@lmw=o9zj=0n@(&sooh&&jstgc"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
-    "127.0.0.1",
+    "*",
 ]
 
 INTERNAL_IPS = [
@@ -52,6 +52,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -126,4 +127,3 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = "media"
 
 MEDIA_COMPANY_IMAGE_DIR = "company_images"
-MEDIA_SPECIALITY_IMAGE_DIR = "speciality_images"
