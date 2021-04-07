@@ -21,7 +21,7 @@ class MyCompanyLetsstart(LoginRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
         if Company.objects.filter(owner__pk=request.user.pk).first():
-            return redirect(reverse("my_company"))
+            return redirect(reverse("company:my_company"))
         return super().get(request, *args, **kwargs)
 
 
