@@ -5,8 +5,8 @@
 <div class="row mt-5">
     <div class="col-12 col-lg-4">
         {% url 'company:my_company' as my_company %}
-        {% url 'company:my_company_letsstart' as my_company_letsstart %}
-        {% if request.path != my_company_letsstart %}
+        {% url 'company:my_company_create' as my_company_create %}
+        {% if request.path != my_company_create %}
         <aside class="pt-3 pb-4 px-4 mb-5 card">
             <h1 class="h4 pt-2 pb-2">Моя компания</h1>
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">

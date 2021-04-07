@@ -1,15 +1,18 @@
 {% extends 'vacancies/company/my_company_base.html' %}
+{% load crispy_forms_tags %}
 
 {% block my_company %}
 
-<form method="post" action="{{ request.path }}">
-    {% csrf_token %}
-    <table>{{ form.as_table }}</table>
+<h1 class="h4 pt-2 pb-3">Вакансия</h1>
+{% if messages %}
+{% for message in messages %}
+<p class="alert alert-info" role="alert" style="text-align: center">
+    {{ message }}
+</p>
+{% endfor %}
+{% endif %}
+{% crispy form "bootstrap4" %}
 
-    <div class="form-group">
-        <input type="submit" class="btn btn-info" value="Сохранить">
-    </div>
-</form>
 
 {% if vacancy %}
 <h2 class="h4 pt-2 pb-3">Отклики - {{ vacancy.application_count }}</h2>

@@ -1,0 +1,7 @@
+{% if company.logo %}
+<a href="{% url 'public:company' company.pk %}" style="max-width: 150px;" class="mx-auto d-block">
+    <img class="mx-auto d-block mw-100" src="{{ company.logo.url }}" alt="">
+</a>
+{% else %}
+<img class="mx-auto d-block" src="https://place-hold.it/150x80" width="150" height="80" alt="">
+{% endif %}

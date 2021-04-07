@@ -9,7 +9,7 @@
     <div class="row mt-5">
         <div class="col-12 col-lg-8 offset-lg-2 m-auto">
             {% for vacancy in object_list %}
-            {% include "vacancies/helpers/vacancy_card.html" with vacancy=vacancy %}
+            {% include "vacancies/helpers/vacancy_public_card.html" with vacancy=vacancy %}
             {% endfor %}
         </div>
     </div>

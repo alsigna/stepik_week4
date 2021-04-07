@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.db.models import Count
@@ -39,11 +40,12 @@ class MyCompanyCreate(LoginRequiredMixin, View):
 
     def post(self, request):
         company = Company.objects.filter(owner__pk=request.user.pk).first()
-        form = CompanyForm(data=request.POST, instance=company)
+        form = CompanyForm(request.POST, request.FILES, instance=company)
         if form.is_valid():
             company = form.save(commit=False)
             company.owner = get_object_or_404(User, pk=request.user.pk)
             company.save()
+            messages.add_message(request, messages.INFO, "Данные сохранены")
             return redirect(reverse("company:my_company"))
         else:
             return render(request, "vacancies/company/my_company_edit.html", {"form": form})
@@ -96,7 +98,9 @@ class MyCompanyVacancyCreate(LoginRequiredMixin, View):
             vacancy = form.save(commit=False)
             vacancy.company = Company.objects.filter(owner__id=request.user.pk).first()
             vacancy.save()
-            return redirect(reverse("company:my_company_vacancies"))
+            messages.add_message(request, messages.INFO, "Данные сохранены")
+            return redirect(reverse("company:my_company_vacancy_edit", kwargs={"pk": vacancy.pk}))
+
         else:
             return render(request, "vacancies/company/my_company_vacancy_edit.html", {"form": form})
 

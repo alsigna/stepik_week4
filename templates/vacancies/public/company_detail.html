@@ -7,16 +7,18 @@
     <p><a href="{{ request.META.HTTP_REFERER }}">Назад</a></p>
 </div>
 <section>
-    <div class="text-center">
-        <img src="{% static object.logo %}" width="130" height="80" alt="">
-    </div>
+    {% if company.logo %}
+    <img class="mx-auto d-block mw-100" src="{{ object.logo.url }}" alt="">
+    {% else %}
+    <img class="mx-auto d-block" src="https://place-hold.it/150x80" width="150" height="80" alt="">
+    {% endif %}
     <h1 class="h1 text-center mx-auto mt-0 pt-1" style="font-size: 70px;"><strong>{{ object.name }}</strong></h1>
     <p class="text-center pt-1">{{ object.location }},
         {{ object.vacancies.count|ru_pluralize:'вакансия,вакансии,вакансий' }}</p>
     <div class="row mt-5">
         <div class="col-12 col-lg-8 offset-lg-2 m-auto">
             {% for vacancy in object.vacancies.all %}
-            {% include "vacancies/helpers/vacancy_card.html" with vacancy=vacancy %}
+            {% include "vacancies/helpers/vacancy_public_card.html" with vacancy=vacancy %}
             {% endfor %}
         </div>
     </div>

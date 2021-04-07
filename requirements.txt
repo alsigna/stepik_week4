@@ -16,3 +16,4 @@ django-debug-toolbar
 phonenumbers
 django-phonenumber-field
 pillow
+django-crispy-forms

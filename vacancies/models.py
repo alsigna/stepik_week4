@@ -1,16 +1,23 @@
-from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
+from conf.settings import MEDIA_COMPANY_IMAGE_DIR
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.db import models
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Company(models.Model):
     name = models.CharField(max_length=256)
     location = models.CharField(max_length=128)
-    logo = models.URLField(default="https://place-hold.it/100x60")
     description = models.TextField()
     employee_count = models.IntegerField()
     owner = models.OneToOneField(User, on_delete=models.CASCADE, related_name="company")
+    logo = models.ImageField(upload_to=MEDIA_COMPANY_IMAGE_DIR)
+
+    def delete(self, *args, **kwargs):
+        self.picture.storage.delete(self.picture.path)
+        super().delete(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -22,7 +29,7 @@ class Specialty(models.Model):
     picture = models.URLField(default="https://place-hold.it/100x60")
 
     def __str__(self):
-        return self.code
+        return self.title
 
 
 class Vacancy(models.Model):
@@ -41,6 +48,12 @@ class Vacancy(models.Model):
     def get_absolute_url(self):
         return reverse("vacancies", kwargs={"pk": self.pk})
 
+    def clean(self):
+        super().clean()
+        if int(self.salary_min) >= int(self.salary_max):
+            raise ValidationError({"salary_min": ValidationError("Значение должно быть меньше максимального")})
+        return
+
 
 class Application(models.Model):
     written_username = models.CharField(max_length=256)
@@ -55,16 +68,16 @@ class Application(models.Model):
 
 class Resume(models.Model):
     class Grade(models.TextChoices):
-        TRAINEE = "Стажер"
-        JUNIOR = "Джуниор"
-        MIDDLE = "Миддл"
-        SENIOR = "Синьор"
-        LEAD = "Лид"
+        TRAINEE = "TRAINEE", _("Стажер")
+        JUNIOR = "JUNIOR", _("Джуниор")
+        MIDDLE = "MIDDLE", _("Миддл")
+        SENIOR = "SENIOR", _("Синьор")
+        LEAD = "LEAD", _("Лид")
 
     class Status(models.TextChoices):
-        CLOSE = "Не ищу работу"
-        PASSIVE = "Рассматриваю предложения"
-        ACTIVE = "Ищу работу"
+        CLOSE = "CLOSE", _("Не ищу работу")
+        PASSIVE = "PASSIVE", _("Рассматриваю предложения")
+        ACTIVE = "ACTIVE", _("Ищу работу")
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="resume")
     name = models.CharField(max_length=128)

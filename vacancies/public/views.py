@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django.db.models import Count, Q
-from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.views.generic import DetailView, ListView
@@ -8,10 +7,6 @@ from django.views.generic.base import TemplateView
 from vacancies.models import Company, Specialty, Vacancy
 
 from .forms import ApplicationForm
-
-
-def custom_500(request):
-    raise Http404
 
 
 class MainView(TemplateView):
@@ -81,6 +76,7 @@ class ApplicationSentView(TemplateView):
 
 class CompanyView(DetailView):
     model = Company
+    template_name = "vacancies/public/company_detail.html"
 
     def get_queryset(self):
         return super().get_queryset().prefetch_related("vacancies")

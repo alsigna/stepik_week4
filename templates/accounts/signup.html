@@ -1,20 +1,13 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block main %}
-<div class="row">
-    <div class="col-8 col-lg-4 offset-2 offset-lg-4">
-        <form class="form-signin pt-5" enctype="multipart/form-data" method="post" action="{% url 'accounts:signup' %}">
-            {% csrf_token %}
-            <table>{{ form.as_table }}</table>
-            <div class="checkbox mb-3"></div>
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Зарегистрироваться</button>
-        </form>
 
-        <div class="mt-4 text-center">
-            <p>Есть аккаунт?<a href="{% url 'accounts:login' %}">Войдите!</a></p>
-        </div>
+<div class="col-8 col-lg-4 offset-2 offset-lg-4">
+    {% crispy form "bootstrap4" %}
+    <div class="mt-4 text-center">
+        <p>Есть аккаунт? <a href="{% url 'login' %}">Войдите!</a></p>
     </div>
 </div>
-
 
 {% endblock %}

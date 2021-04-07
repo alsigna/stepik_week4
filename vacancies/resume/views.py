@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect, render
@@ -42,6 +43,7 @@ class MyResumeCreate(LoginRequiredMixin, View):
             resume = form.save(commit=False)
             resume.user = get_object_or_404(User, pk=request.user.pk)
             resume.save()
+            messages.add_message(request, messages.INFO, "Данные сохранены")
             return redirect(reverse("resume:my_resume"))
         else:
             return render(request, "vacancies/resume/my_resume_edit.html", {"form": form})
