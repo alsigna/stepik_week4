@@ -18,3 +18,4 @@ django-phonenumber-field
 pillow
 django-crispy-forms
 whitenoise
+gunicorn

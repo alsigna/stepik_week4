@@ -1,3 +1,12 @@
+#####################################################################
+#       Existed users (login / password)                            #
+#        - admin / admin                                            #
+#        - user1 / 123                                              #
+#        - user2 / 123                                              #
+#        - ...                                                      #
+#        - user8 / 123                                              #
+#####################################################################
+
 from conf.settings import MEDIA_COMPANY_IMAGE_DIR
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
